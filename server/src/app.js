@@ -1,7 +1,12 @@
 import express from "express"
 import authRouter from "./routes/auth.routes.js";
 
+
+
 const app=express();
+
+// it take json and parse it and available the data in req.body
+app.use(express.json());
 
 //  authentication routes 
 app.use("/api/auth",authRouter);
