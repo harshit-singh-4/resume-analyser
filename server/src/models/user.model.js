@@ -15,11 +15,16 @@ const userSchema = new mongoose.Schema({
         unique: true
     },
 
-    password: {
+    hashpassword: {
         type: String,
         required: true,
         minlength: 8
-    }
+    },
+
+    isEmailVerified: {
+       type: Boolean,
+       default: false,
+    },
 });
 
 export default  mongoose.model("User", userSchema);
