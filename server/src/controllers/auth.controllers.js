@@ -1,6 +1,7 @@
 import * as authService from "../services/auth.services.js"
 import * as userSchema from "../validators/auth.validators.js";
 
+
 /** 
 * @name         registerUserController
 * @description  register a new user accept username,email,password .
@@ -43,8 +44,21 @@ if (userData) {
  
  const newUser= await authService.createUser({name,email,hashpassword});
 
+ const {token,tokenHash}=authService.generateVerificationToken();
+
+ //  Set expiry to 15 minutes from now
+  const expiresAt = new Date(Date.now() + 15 * 60 * 1000);
+
+  // token created in database
+ await authService.createVerificationToken({
+  id:newUser._id,
+  tokenHash,
+  expiresAt
+ });
 
  
+
+
   return res.status(201).json({
       success: true,
       message: "User registered successfully",
